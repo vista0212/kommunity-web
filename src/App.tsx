@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ApolloProvider } from 'react-apollo';
+import client from './lib/graphql/client';
+import { Helmet } from 'react-helmet';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import Mainpage from './pages/Mainpage';
+import { GlobalStyle } from './GlobalStyle';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <GlobalStyle />
+      <Helmet>
+        <title>kommunity</title>
+        <meta name="description" content="내가 만드는 게시판" />
+      </Helmet>
+      <Header>
+        <h1>kommunity</h1>
+      </Header>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={Mainpage} exact />
+        </Switch>
+        <Footer />
+      </BrowserRouter>
+    </ApolloProvider>
   );
-}
+};
 
 export default App;
