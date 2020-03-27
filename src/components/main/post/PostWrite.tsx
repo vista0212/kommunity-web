@@ -85,13 +85,11 @@ const SubmitButton = styled.button`
 
 const PostWrite = () => {
   return (
-    <>
-      <PostWriteBlock>
-        <WriteDescription>Write Box</WriteDescription>
-        <WriteInput placeholder="글을 입력하세요" />
-        <SubmitButton>Done</SubmitButton>
-      </PostWriteBlock>
-    </>
+    <PostWriteBlock>
+      <WriteDescription>Write Box</WriteDescription>
+      <WriteInput placeholder="글을 입력하세요" />
+      <SubmitButton>Done</SubmitButton>
+    </PostWriteBlock>
   );
 };
 

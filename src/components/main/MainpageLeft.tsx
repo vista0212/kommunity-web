@@ -19,12 +19,10 @@ const MainpageLeftBlock = styled.div`
 
 const MainpageLeft = () => {
   return (
-    <>
-      <MainpageLeftBlock>
-        <PostWrite />
-        <Post />
-      </MainpageLeftBlock>
-    </>
+    <MainpageLeftBlock>
+      <PostWrite />
+      <Post />
+    </MainpageLeftBlock>
   );
 };
 

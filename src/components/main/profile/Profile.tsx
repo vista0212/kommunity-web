@@ -90,21 +90,19 @@ const ProfileInfo = styled.a`
 
 const Profile = () => {
   return (
-    <>
-      <ProfileBlock>
-        <ProfileTop>My Profile</ProfileTop>
-        <ProfileBody>
-          <ProfileImageBlock>
-            <ProfileImage src="/images/noProfile.jpg" />
-          </ProfileImageBlock>
-          <ProfileInfoBlock>
-            <ProfileInfo>이름 : 김경백</ProfileInfo>
-            <ProfileInfo>Age: 19</ProfileInfo>
-            <ProfileInfo>Gender: Male</ProfileInfo>
-          </ProfileInfoBlock>
-        </ProfileBody>
-      </ProfileBlock>
-    </>
+    <ProfileBlock>
+      <ProfileTop>My Profile</ProfileTop>
+      <ProfileBody>
+        <ProfileImageBlock>
+          <ProfileImage src="/images/noProfile.jpg" />
+        </ProfileImageBlock>
+        <ProfileInfoBlock>
+          <ProfileInfo>이름 : 김경백</ProfileInfo>
+          <ProfileInfo>Age: 19</ProfileInfo>
+          <ProfileInfo>Gender: Male</ProfileInfo>
+        </ProfileInfoBlock>
+      </ProfileBody>
+    </ProfileBlock>
   );
 };
 

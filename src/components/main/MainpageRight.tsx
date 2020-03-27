@@ -19,11 +19,9 @@ const MainpageRightBlock = styled.div`
 
 const MainpageRight: React.FC = () => {
   return (
-    <>
-      <MainpageRightBlock>
-        <Profile />
-      </MainpageRightBlock>
-    </>
+    <MainpageRightBlock>
+      <Profile />
+    </MainpageRightBlock>
   );
 };
 

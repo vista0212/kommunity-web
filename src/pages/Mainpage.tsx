@@ -16,12 +16,10 @@ const MainpageBlock = styled.div`
 
 const Mainpage: React.FC = () => {
   return (
-    <>
-      <MainpageBlock>
-        <MainpageLeft />
-        <MainpageRight />
-      </MainpageBlock>
-    </>
+    <MainpageBlock>
+      <MainpageLeft />
+      <MainpageRight />
+    </MainpageBlock>
   );
 };
 
