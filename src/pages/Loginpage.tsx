@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const RegisterBlock = styled.div`
+const LoginBlock = styled.div`
   @media only screen and (min-width: 1920px) {
     display: flex;
     flex-direction: column;
@@ -9,7 +9,7 @@ const RegisterBlock = styled.div`
 
     height: 52.22em;
 
-    padding: 8em 38em;
+    padding: 13em 38em;
 
     box-sizing: border-box;
 
@@ -17,9 +17,9 @@ const RegisterBlock = styled.div`
   }
 `;
 
-const RegisterTitle = styled.h1``;
+const LoginTitle = styled.h1``;
 
-const RegisterInput = styled.input`
+const LoginInput = styled.input`
   @media only screen and (min-width: 1920px) {
     padding: 0.3em 0.5em;
     margin: 1em 0em;
@@ -40,7 +40,7 @@ const RegisterInput = styled.input`
   }
 `;
 
-const RegisterButton = styled.button`
+const LoginButton = styled.button`
   margin-top: 0.5em;
 
   width: 100%;
@@ -60,17 +60,15 @@ const RegisterButton = styled.button`
   box-sizing: border-box;
 `;
 
-const Registerpage: React.FC = () => {
+const Loginpage: React.FC = () => {
   return (
-    <RegisterBlock>
-      <RegisterTitle>회원가입</RegisterTitle>
-      <RegisterInput placeholder="아이디를 입력해주세요" />
-      <RegisterInput placeholder="비밀번호를 입력해주세요" />
-      <RegisterInput placeholder="이메일을 입력해주세요" />
-      <RegisterInput placeholder="이름을 입력해주세요" />
-      <RegisterButton>회원가입</RegisterButton>
-    </RegisterBlock>
+    <LoginBlock>
+      <LoginTitle>로그인</LoginTitle>
+      <LoginInput placeholder="아이디를 입력해주세요" />
+      <LoginInput placeholder="비밀번호를 입력해주세요" />
+      <LoginButton>로그인</LoginButton>
+    </LoginBlock>
   );
 };
 
-export default Registerpage;
+export default Loginpage;

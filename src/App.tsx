@@ -8,6 +8,7 @@ import { Footer } from './components/Footer';
 import Mainpage from './pages/Mainpage';
 import { GlobalStyle } from './GlobalStyle';
 import Registerpage from './pages/Registerpage';
+import Loginpage from './pages/Loginpage';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/" component={Mainpage} exact />
           <Route path="/register" component={Registerpage} exact />
+          <Route path="/login" component={Loginpage} exact />
         </Switch>
         <Footer />
       </BrowserRouter>
