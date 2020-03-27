@@ -167,7 +167,7 @@ const CommentBox = styled.div`
   }
 `;
 
-const CommentWriteBlock = styled.div`
+const CommentWriteBlock = styled.form`
   @media only screen and (min-width: 1920px) {
     width: 34.8em;
     padding: 0 2em;
@@ -205,6 +205,8 @@ const CommentWriteButton = styled.button`
     border: 0.15em solid #505afc;
 
     background: #505afc;
+
+    cursor: pointer;
   }
 `;
 

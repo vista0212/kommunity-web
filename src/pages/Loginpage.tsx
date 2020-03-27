@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LoginBlock = styled.div`
+const LoginBlock = styled.form`
   @media only screen and (min-width: 1920px) {
     display: flex;
     flex-direction: column;
@@ -58,6 +58,8 @@ const LoginButton = styled.button`
   border-radius: 16px;
 
   box-sizing: border-box;
+
+  cursor: pointer;
 `;
 
 const Loginpage: React.FC = () => {
