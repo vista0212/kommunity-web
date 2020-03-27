@@ -9,6 +9,8 @@ const MainpageBlock = styled.div`
 
     display: flex;
     flex-direction: row;
+
+    font-famliy: 'NanumSquareRound';
   }
 `;
 

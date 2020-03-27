@@ -25,10 +25,21 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'NanumSquareRound';
+    src: url('./lib/fonts/NanumSquareRoundL.eot');
+    src: url('./lib/fonts/NanumSquareRoundL.eot?#iefix') format('embedded-opentype'),
+        url('./lib/fonts/NanumSquareRoundL.woff2') format('woff2'),
+        url('./lib/fonts/NanumSquareRoundL.woff') format('woff'),
+        url('./lib/fonts/NanumSquareRoundL.ttf') format('truetype'),
+        url('./lib/fonts/NanumSquareRoundL.svg#NanumSquareRoundL') format('svg');
+    font-weight: 300;
+    font-style: normal;
+  }
+
   body {    
     margin: 0;
     box-sizing: border-box;
-    font-family: "NanumGothic";
     overflow-x: hidden;
   }
 `;

@@ -84,7 +84,9 @@ const ProfileInfoBlock = styled.div`
   }
 `;
 
-const ProfileInfo = styled.a``;
+const ProfileInfo = styled.a`
+  font-weight: light;
+`;
 
 const Profile = () => {
   return (
@@ -93,10 +95,10 @@ const Profile = () => {
         <ProfileTop>My Profile</ProfileTop>
         <ProfileBody>
           <ProfileImageBlock>
-            <ProfileImage src="/image/noProfile.jpg" />
+            <ProfileImage src="/images/noProfile.jpg" />
           </ProfileImageBlock>
           <ProfileInfoBlock>
-            <ProfileInfo>Name: Kim Kyoung Baek</ProfileInfo>
+            <ProfileInfo>이름 : 김경백</ProfileInfo>
             <ProfileInfo>Age: 19</ProfileInfo>
             <ProfileInfo>Gender: Male</ProfileInfo>
           </ProfileInfoBlock>

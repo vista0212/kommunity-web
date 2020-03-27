@@ -4,7 +4,7 @@ import Profile from './profile/Profile';
 
 const MainpageRightBlock = styled.div`
   @media only screen and (min-width: 1920px) {
-    padding: 0 3em;
+    padding: 0 4em;
 
     width: 45%;
 
@@ -12,6 +12,8 @@ const MainpageRightBlock = styled.div`
 
     display: flex;
     flex-direction: column;
+
+    font-family: 'NanumSquareRound';
   }
 `;
 
