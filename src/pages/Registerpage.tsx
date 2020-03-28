@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useMutation } from 'react-apollo';
+import { REGISTER } from '../lib/graphql/query/User';
 
 const RegisterBlock = styled.form`
   @media only screen and (min-width: 1920px) {
@@ -62,15 +64,53 @@ const RegisterButton = styled.button`
   cursor: pointer;
 `;
 
+type Input = {
+  id: HTMLInputElement | null;
+  password: HTMLInputElement | null;
+  email: HTMLInputElement | null;
+  signKey: HTMLInputElement | null;
+};
+
 const Registerpage: React.FC = () => {
+  const [register, { data }] = useMutation(REGISTER);
+
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [signKey, setSignKey] = useState('');
+
   return (
-    <RegisterBlock>
+    <RegisterBlock
+      onSubmit={e => {
+        e.preventDefault();
+        register({
+          variables: {
+            id,
+            password,
+            email,
+            signKey
+          }
+        }).catch(err => {
+          console.log(err);
+          alert('회원가입 실패');
+        });
+      }}
+    >
       <RegisterTitle>회원가입</RegisterTitle>
-      <RegisterInput placeholder="아이디를 입력해주세요" />
-      <RegisterInput placeholder="비밀번호를 입력해주세요" />
-      <RegisterInput placeholder="이메일을 입력해주세요" />
-      <RegisterInput placeholder="이름을 입력해주세요" />
-      <RegisterButton>회원가입</RegisterButton>
+      <RegisterInput
+        onChange={e => {
+          setId(e.target.value);
+        }}
+        placeholder="아이디를 입력해주세요"
+      />
+      <RegisterInput
+        onChange={e => setPassword(e.target.value)}
+        type="password"
+        placeholder="비밀번호를 입력해주세요"
+      />
+      <RegisterInput onChange={e => setEmail(e.target.value)} placeholder="이메일을 입력해주세요" />
+      <RegisterInput onChange={e => setSignKey(e.target.value)} placeholder="키를 입력해주세요" />
+      <RegisterButton type="submit">회원가입</RegisterButton>
     </RegisterBlock>
   );
 };

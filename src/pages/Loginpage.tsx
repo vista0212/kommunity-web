@@ -68,7 +68,7 @@ const Loginpage: React.FC = () => {
       <LoginTitle>로그인</LoginTitle>
       <LoginInput placeholder="아이디를 입력해주세요" />
       <LoginInput placeholder="비밀번호를 입력해주세요" />
-      <LoginButton>로그인</LoginButton>
+      <LoginButton type="submit">로그인</LoginButton>
     </LoginBlock>
   );
 };
