@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { LOGIN } from '../lib/graphql/query/User';
+import { useQuery, useMutation } from 'react-apollo';
 
 const LoginBlock = styled.form`
   @media only screen and (min-width: 1920px) {
@@ -63,11 +65,48 @@ const LoginButton = styled.button`
 `;
 
 const Loginpage: React.FC = () => {
+  const [login] = useMutation(LOGIN);
+
+  const Login = async () => {
+    try {
+      const response = await login({
+        variables: {
+          id,
+          password
+        }
+      });
+
+      localStorage.setItem('accessToken', response.data.login.token);
+      window.location.href = 'http://localhost:3000/';
+    } catch (err) {
+      alert(err.networkError.result.errors[0].message);
+    }
+  };
+
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
-    <LoginBlock>
+    <LoginBlock
+      onSubmit={e => {
+        e.preventDefault();
+        Login();
+      }}
+    >
       <LoginTitle>로그인</LoginTitle>
-      <LoginInput placeholder="아이디를 입력해주세요" />
-      <LoginInput placeholder="비밀번호를 입력해주세요" />
+      <LoginInput
+        onChange={e => {
+          setId(e.target.value);
+        }}
+        placeholder="아이디를 입력해주세요"
+      />
+      <LoginInput
+        onChange={e => {
+          setPassword(e.target.value);
+        }}
+        type="password"
+        placeholder="비밀번호를 입력해주세요"
+      />
       <LoginButton type="submit">로그인</LoginButton>
     </LoginBlock>
   );

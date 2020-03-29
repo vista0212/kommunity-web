@@ -14,3 +14,11 @@ export const REGISTER = gql`
     register(id: $id, email: $email, signKey: $signKey, password: $password)
   }
 `;
+
+export const LOGIN = gql`
+  mutation Login($id: String!, $password: String!) {
+    login(id: $id, password: $password) {
+      token
+    }
+  }
+`;
