@@ -1,7 +1,15 @@
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { createUploadLink } from 'apollo-upload-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
+const cache = new InMemoryCache();
+const uploadLink = createUploadLink({
+  uri: 'http://localhost:5000/graphql'
+});
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql'
+  link: uploadLink,
+  cache
 });
 
 export default client;

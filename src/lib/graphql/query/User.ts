@@ -22,3 +22,20 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const IMAGE = gql`
+  mutation Image($file: Upload!) {
+    image(file: $file)
+  }
+`;
+
+export const GET_USER = gql`
+  query GetUser($token: String!) {
+    getUser(token: $token) {
+      pk
+      email
+      name
+      image
+    }
+  }
+`;
