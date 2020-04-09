@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { User } from '../../../lib/graphql/query/User';
 
 const ProfileBlock = styled.div`
   box-sizing: border-box;
@@ -88,7 +89,7 @@ const ProfileInfo = styled.a`
   font-weight: light;
 `;
 
-const Profile = () => {
+const Profile = ({ user }: { user: User | undefined }) => {
   return (
     <ProfileBlock>
       <ProfileTop>My Profile</ProfileTop>
@@ -97,8 +98,8 @@ const Profile = () => {
           <ProfileImage src="/images/noProfile.jpg" />
         </ProfileImageBlock>
         <ProfileInfoBlock>
-          <ProfileInfo>이름 : 김경백</ProfileInfo>
-          <ProfileInfo>Age: 19</ProfileInfo>
+          <ProfileInfo>이름 : {user ? user.name : undefined}</ProfileInfo>
+          <ProfileInfo>이메일 : {user ? user.email : undefined} </ProfileInfo>
           <ProfileInfo>Gender: Male</ProfileInfo>
         </ProfileInfoBlock>
       </ProfileBody>

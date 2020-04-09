@@ -72,8 +72,8 @@ const Loginpage: React.FC = () => {
       const response = await login({
         variables: {
           id,
-          password
-        }
+          password,
+        },
       });
 
       localStorage.setItem('accessToken', response.data.login.token);
@@ -88,20 +88,20 @@ const Loginpage: React.FC = () => {
 
   return (
     <LoginBlock
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         Login();
       }}
     >
       <LoginTitle>로그인</LoginTitle>
       <LoginInput
-        onChange={e => {
+        onChange={(e) => {
           setId(e.target.value);
         }}
         placeholder="아이디를 입력해주세요"
       />
       <LoginInput
-        onChange={e => {
+        onChange={(e) => {
           setPassword(e.target.value);
         }}
         type="password"
