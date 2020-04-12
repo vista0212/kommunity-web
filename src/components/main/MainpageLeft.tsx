@@ -17,11 +17,11 @@ const MainpageLeftBlock = styled.div`
   }
 `;
 
-const MainpageLeft = () => {
+const MainpageLeft = ({ token }: { token: string | null }) => {
   return (
     <MainpageLeftBlock>
-      <PostWrite />
-      <Post />
+      <PostWrite token={token} />
+      <Post token={token} />
     </MainpageLeftBlock>
   );
 };

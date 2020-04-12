@@ -5,6 +5,7 @@ export type User = {
   id: string;
   email: string;
   name: string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -18,6 +19,9 @@ export const REGISTER = gql`
 export const LOGIN = gql`
   mutation Login($id: String!, $password: String!) {
     login(id: $id, password: $password) {
+      user {
+        name
+      }
       token
     }
   }

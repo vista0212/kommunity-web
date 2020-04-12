@@ -14,7 +14,7 @@ const MainComponent = () => {
 
   return (
     <>
-      <MainpageLeft />
+      <MainpageLeft token={accessToken} />
       <MainpageRight token={accessToken} />
     </>
   );

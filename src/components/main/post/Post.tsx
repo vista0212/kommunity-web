@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdThumbUp, MdComment } from 'react-icons/md';
+import { GET_BOARD, Board, BoardImage } from '../../../lib/graphql/query/Board';
+import { useQuery } from 'react-apollo';
 
 const PostBlock = styled.div`
   @media only screen and (min-width: 1920px) {
@@ -21,6 +23,8 @@ const PostItem = styled.div`
 
     display: flex;
     flex-direction: column;
+
+    margin-bottom: 5em;
   }
 `;
 
@@ -269,84 +273,119 @@ const CommentContent = styled.div`
   }
 `;
 
-const Post: React.FC = () => {
+const Post = ({ token }: { token: string | null }) => {
+  const { loading, error, data } = useQuery(GET_BOARD, {
+    variables: {
+      token,
+    },
+  });
+
+  if (loading) console.log('loading. . .');
+  if (error) console.log(error);
+
   return (
     <PostBlock>
-      <PostItem>
-        <PostInfo>
-          <UserImage src="/images/profile.jpg" />
-          <UserName>김경백</UserName>
-          <LikeCountBlock>
-            <MdThumbUp />
-            <LikeCount>123</LikeCount>
-          </LikeCountBlock>
-        </PostInfo>
-        <PostContentBlock>
-          <PostContent>너보다 한강이 더 예뻐</PostContent>
-          <PostImage src="/images/image.jpg" />
-        </PostContentBlock>
-        <PostBottomBlock>
-          <PostLikeBlock>
-            <MdThumbUp />
-            <PostLike>좋아요</PostLike>
-          </PostLikeBlock>
-          <PostCommentBlock>
-            <MdComment />
-            <PostComment>댓글</PostComment>
-          </PostCommentBlock>
-        </PostBottomBlock>
-        <CommentBox>
-          <CommentWriteBlock>
-            <CommentInput placeholder="댓글을 입력하세요" />
-            <CommentWriteButton>작성하기</CommentWriteButton>
-          </CommentWriteBlock>
-          <CommentBlock>
-            <CommentUserImage src="/images/noProfile.jpg" />
-            <CommentContentBlock>
-              <CommentUserName>김경백</CommentUserName>
-              <CommentContent>
-                ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
-              </CommentContent>
-            </CommentContentBlock>
-          </CommentBlock>
-          <CommentBlock>
-            <CommentUserImage src="/images/noProfile.jpg" />
-            <CommentContentBlock>
-              <CommentUserName>김경백</CommentUserName>
-              <CommentContent>
-                ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
-              </CommentContent>
-            </CommentContentBlock>
-          </CommentBlock>
-          <CommentBlock>
-            <CommentUserImage src="/images/noProfile.jpg" />
-            <CommentContentBlock>
-              <CommentUserName>김경백</CommentUserName>
-              <CommentContent>
-                ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
-              </CommentContent>
-            </CommentContentBlock>
-          </CommentBlock>
-          <CommentBlock>
-            <CommentUserImage src="/images/noProfile.jpg" />
-            <CommentContentBlock>
-              <CommentUserName>김경백</CommentUserName>
-              <CommentContent>
-                ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
-              </CommentContent>
-            </CommentContentBlock>
-          </CommentBlock>
-          <CommentBlock>
-            <CommentUserImage src="/images/noProfile.jpg" />
-            <CommentContentBlock>
-              <CommentUserName>김경백</CommentUserName>
-              <CommentContent>
-                ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
-              </CommentContent>
-            </CommentContentBlock>
-          </CommentBlock>
-        </CommentBox>
-      </PostItem>
+      {data ? (
+        data.boards.map((board: Board) => (
+          <PostItem>
+            <PostInfo>
+              <UserImage
+                src={
+                  board.user.image
+                    ? board.user.image
+                    : 'https://s3-kommunity.s3.ap-northeast-2.amazonaws.com/board-image/1586617608119noProfile.jpg'
+                }
+              />
+              <UserName>{board.user.name}</UserName>
+              <LikeCountBlock>
+                <MdThumbUp />
+                <LikeCount>{board.likes}</LikeCount>
+              </LikeCountBlock>
+            </PostInfo>
+            <PostContentBlock>
+              <PostContent>
+                {board.content.split('\n').map((text) => (
+                  <div>
+                    {text}
+                    <br />
+                  </div>
+                ))}
+              </PostContent>
+              {board.boardImage.map((image: BoardImage) => (
+                <PostImage
+                  src={
+                    'https://s3-kommunity.s3.ap-northeast-2.amazonaws.com/board-image/' +
+                    image.image
+                  }
+                />
+              ))}
+            </PostContentBlock>
+            <PostBottomBlock>
+              <PostLikeBlock>
+                <MdThumbUp />
+                <PostLike>좋아요</PostLike>
+              </PostLikeBlock>
+              <PostCommentBlock>
+                <MdComment />
+                <PostComment>댓글</PostComment>
+              </PostCommentBlock>
+            </PostBottomBlock>
+            <CommentBox>
+              <CommentWriteBlock>
+                <CommentInput placeholder="댓글을 입력하세요" />
+                <CommentWriteButton>작성하기</CommentWriteButton>
+              </CommentWriteBlock>
+              <CommentBlock>
+                <CommentUserImage src="/images/noProfile.jpg" />
+                <CommentContentBlock>
+                  <CommentUserName>김경백</CommentUserName>
+                  <CommentContent>
+                    ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
+                  </CommentContent>
+                </CommentContentBlock>
+              </CommentBlock>
+              <CommentBlock>
+                <CommentUserImage src="/images/noProfile.jpg" />
+                <CommentContentBlock>
+                  <CommentUserName>김경백</CommentUserName>
+                  <CommentContent>
+                    ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
+                  </CommentContent>
+                </CommentContentBlock>
+              </CommentBlock>
+              <CommentBlock>
+                <CommentUserImage src="/images/noProfile.jpg" />
+                <CommentContentBlock>
+                  <CommentUserName>김경백</CommentUserName>
+                  <CommentContent>
+                    ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
+                  </CommentContent>
+                </CommentContentBlock>
+              </CommentBlock>
+              <CommentBlock>
+                <CommentUserImage src="/images/noProfile.jpg" />
+                <CommentContentBlock>
+                  <CommentUserName>김경백</CommentUserName>
+                  <CommentContent>
+                    ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
+                  </CommentContent>
+                </CommentContentBlock>
+              </CommentBlock>
+              <CommentBlock>
+                <CommentUserImage src="/images/noProfile.jpg" />
+                <CommentContentBlock>
+                  <CommentUserName>김경백</CommentUserName>
+                  <CommentContent>
+                    ㅁ이ㅏㄻㄴㅇ리ㅏㅓㅁㄴㅇㄹ;ㅣㅏ먼ㅇ리ㅏㅓㄴㅇ리ㅏ;ㅇㄴ멀;ㅣ만ㅇ러니아sadfasdfasdfhsakjdflasdlkfjsaldjfklasdjfkalsd;fjklaksdjfl;asdjflasdjflasd;fjasdlkfjasd;lfkjasdfl;asjflkasdjflkasdjfkalsdjfkldsjkl
+                  </CommentContent>
+                </CommentContentBlock>
+              </CommentBlock>
+            </CommentBox>
+          </PostItem>
+        ))
+      ) : (
+        <div></div>
+      )}
     </PostBlock>
   );
 };

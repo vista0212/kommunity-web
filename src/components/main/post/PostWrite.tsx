@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useMutation } from 'react-apollo';
+import { POST_BOARD, POST_IMAGE, Board } from '../../../lib/graphql/query/Board';
 
 const PostWriteBlock = styled.form`
   @media only screen and (min-width: 1920px) {
     width: 100%;
-    height: 17em;
+    height: 20em;
 
     display: flex;
     flex-direction: column;
@@ -40,7 +42,7 @@ const WriteInput = styled.textarea`
     padding: 1.2em 1.5em;
 
     width: 100%;
-    height: 60%;
+    height: 50%;
     font-size: 1.1em;
 
     box-sizing: border-box;
@@ -52,6 +54,34 @@ const WriteInput = styled.textarea`
       border: none;
       outline: none;
     }
+  }
+`;
+
+const ImageBlock = styled.div`
+  @media only screen and (min-width: 1920px) {
+    padding: 0.1em 1em;
+
+    width: 100%;
+    height: 5em;
+
+    border-top: 0.15em solid #505afc;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+  }
+`;
+
+const ImageInput = styled.input`
+  @media only screen and (min-width: 1920px) {
+    margin-top: 0.45em;
+    margin-right: 1em;
+
+    width: 3.5em;
+    height: 3.5em;
+
+    border: 1px solid;
   }
 `;
 
@@ -83,12 +113,62 @@ const SubmitButton = styled.button`
   }
 `;
 
-const PostWrite = () => {
+const PostWrite = ({ token }: { token: string | null }) => {
+  const [content, setContent] = useState('');
+  const [file, setFile] = useState<File[]>([]);
+
+  const [postBoard] = useMutation(POST_BOARD);
+  const [postImage] = useMutation(POST_IMAGE);
+
+  const changeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { files } = e.target;
+
+    if (files && files.length > 0) {
+      const file = Array.from(files);
+
+      setFile(file);
+    }
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await postBoard({
+        variables: {
+          token,
+          content,
+        },
+      });
+
+      console.log(data.postBoard.pk);
+
+      for (var i = 0; i < file.length; i++) {
+        await postImage({
+          variables: {
+            token,
+            board_pk: data.postBoard.pk,
+            file: file[i],
+          },
+        });
+      }
+
+      setContent('');
+      window.location.reload();
+    } catch (err) {
+      alert(err.networkError.result.errors[0].message);
+    }
+  };
+
   return (
-    <PostWriteBlock>
+    <PostWriteBlock onSubmit={onSubmit}>
       <WriteDescription>Write Box</WriteDescription>
-      <WriteInput placeholder="글을 입력하세요" />
-      <SubmitButton>Done</SubmitButton>
+      <WriteInput onChange={(e) => setContent(e.target.value)} placeholder="글을 입력하세요" />
+      <ImageBlock>
+        <ImageInput onChange={changeFile} id="files" type="file" multiple />
+      </ImageBlock>
+      <SubmitButton type="submit">Done</SubmitButton>
     </PostWriteBlock>
   );
 };

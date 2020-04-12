@@ -9,6 +9,7 @@ import Mainpage from './pages/Mainpage';
 import { GlobalStyle } from './GlobalStyle';
 import Registerpage from './pages/Registerpage';
 import Loginpage from './pages/Loginpage';
+import Testpage from './pages/Testpage';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           <Route path="/" component={Mainpage} exact />
           <Route path="/register" component={Registerpage} exact />
           <Route path="/login" component={Loginpage} exact />
+          <Route path="/test" component={Testpage} exact />
         </Switch>
         <Footer />
       </BrowserRouter>
