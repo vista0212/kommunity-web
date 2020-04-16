@@ -36,6 +36,11 @@ export const GET_BOARD = gql`
         content
         createdAt
         updatedAt
+        user {
+          pk
+          name
+          image
+        }
       }
       user {
         pk
