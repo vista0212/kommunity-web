@@ -6,12 +6,13 @@ export type Board = {
   pk: number;
   user_pk: string;
   content: string;
-  likes: number;
   createdAt: Date;
   updatedAt: Date;
   comment: Comment[];
   user: User;
   boardImage: BoardImage[];
+  boardLike: BoardLike[];
+  isLike: Boolean;
 };
 
 export type BoardImage = {
@@ -20,15 +21,21 @@ export type BoardImage = {
   image: string;
 };
 
+export type BoardLike = {
+  pk: number;
+  board_pk: number;
+  user_pk: string;
+};
+
 export const GET_BOARD = gql`
   query Getboard($token: String!) {
     boards(token: $token) {
       pk
       user_pk
       content
-      likes
       createdAt
       updatedAt
+      isLike
       comment {
         pk
         user_pk
@@ -52,6 +59,11 @@ export const GET_BOARD = gql`
         board_pk
         image
       }
+      boardLike {
+        pk
+        board_pk
+        user_pk
+      }
     }
   }
 `;
@@ -67,5 +79,11 @@ export const POST_BOARD = gql`
 export const POST_IMAGE = gql`
   mutation Postimage($token: String!, $board_pk: Int!, $file: Upload!) {
     postImage(token: $token, board_pk: $board_pk, file: $file)
+  }
+`;
+
+export const BOARD_LIKE = gql`
+  mutation Boardlike($token: String!, $board_pk: Int!) {
+    boardLike(token: $token, board_pk: $board_pk)
   }
 `;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Board, BoardImage } from '../../../lib/graphql/query/Board';
-import { MdThumbUp, MdComment } from 'react-icons/md';
+import { Board, BoardImage, BOARD_LIKE, BoardLike } from '../../../lib/graphql/query/Board';
+import { MdThumbUp, MdComment, MdMoreHoriz } from 'react-icons/md';
 import { Comment, POST_COMMENT } from '../../../lib/graphql/query/Comment';
 import { useMutation } from 'react-apollo';
 
@@ -130,6 +130,8 @@ const PostLike = styled.a`
     margin-top: 1.2em;
     margin-left: 0.3em;
     font-size: 0.8em;
+
+    cursor: pointer;
   }
 `;
 
@@ -272,6 +274,7 @@ const PostItem = ({ board, token }: { board: Board; token: string | null }) => {
   const [comment, setComment] = useState('');
 
   const [postComment] = useMutation(POST_COMMENT);
+  const [boardLike] = useMutation(BOARD_LIKE);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -282,12 +285,31 @@ const PostItem = ({ board, token }: { board: Board; token: string | null }) => {
         board_pk: board.pk,
         content: comment,
       },
-    }).catch((err) => {
-      alert(err.networkError.result.errors[0].message);
-    });
+    })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert(err.networkError.result.errors[0].message);
+      });
   };
 
-  console.log(board);
+  const likeBoard = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    await boardLike({
+      variables: {
+        token,
+        board_pk: board.pk,
+      },
+    })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert(err.networkError.result.errors[0].message);
+      });
+  };
 
   return (
     <PostItemBlock>
@@ -302,7 +324,7 @@ const PostItem = ({ board, token }: { board: Board; token: string | null }) => {
         <UserName>{board.user.name}</UserName>
         <LikeCountBlock>
           <MdThumbUp />
-          <LikeCount>{board.likes}</LikeCount>
+          <LikeCount>{board.boardLike.length}</LikeCount>
         </LikeCountBlock>
       </PostInfo>
       <PostContentBlock>
@@ -322,8 +344,10 @@ const PostItem = ({ board, token }: { board: Board; token: string | null }) => {
       </PostContentBlock>
       <PostBottomBlock>
         <PostLikeBlock>
-          <MdThumbUp />
-          <PostLike>좋아요</PostLike>
+          <MdThumbUp style={board.isLike ? { color: '#505afc' } : {}} />
+          <PostLike style={board.isLike ? { color: '#505afc' } : {}} onClick={likeBoard}>
+            좋아요
+          </PostLike>
         </PostLikeBlock>
         <PostCommentBlock>
           <MdComment />
